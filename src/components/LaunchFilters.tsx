@@ -42,7 +42,6 @@ export const LaunchFilters = ({ onFilterChange }: Props) => {
           <MenuItem value="false">Fallo</MenuItem>
         </TextField>
       </Grid>
-      {/* Más filtros como cohete se pueden añadir aquí */}
     </Grid>
   );
 };

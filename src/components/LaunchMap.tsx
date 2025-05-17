@@ -6,7 +6,7 @@ import {
 } from "@react-google-maps/api";
 import { CircularProgress, Typography } from "@mui/material";
 import { useState } from "react";
-import type { Launchpad } from "../../types";
+import type { Launchpad } from "../types";
 
 type Props = {
   launchpads: Launchpad[];
