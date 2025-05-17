@@ -1,5 +1,5 @@
 import { Typography, Box } from "@mui/material";
-import { useFavorites } from "../hooks/useFavorites";
+import { useFavorites } from "../../hooks/useFavorites";
 import { LaunchCard } from "./LaunchCard";
 
 export const FavoriteLaunches = () => {

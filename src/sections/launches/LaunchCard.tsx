@@ -1,8 +1,8 @@
 import { Card, CardContent, Typography, IconButton } from "@mui/material";
 import { Star, StarBorder } from "@mui/icons-material";
-import type { Launch } from "../types";
+import type { Launch } from "../../types";
 
-import { useFavorites } from "../hooks/useFavorites";
+import { useFavorites } from "../../hooks/useFavorites";
 
 type Props = {
   launch: Launch;

@@ -4,7 +4,7 @@ export interface Launch {
   date_utc: string;
   success: boolean;
   rocketId: string;
-  launchpadI: string;
+  launchpadId: string;
   details?: string;
   links: {
     patch: { small: string; large: string };
