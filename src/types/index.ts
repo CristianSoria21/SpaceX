@@ -12,6 +12,11 @@ export interface Launch {
   };
 }
 
+export interface Rocket {
+  id: string;
+  name: string;
+}
+
 export interface Launchpad {
   id: string;
   name: string;
@@ -19,4 +24,11 @@ export interface Launchpad {
   region: string;
   latitude: number;
   longitude: number;
+}
+
+export interface Filters {
+  search: string;
+  year: string;
+  success: string;
+  rocket: string;
 }

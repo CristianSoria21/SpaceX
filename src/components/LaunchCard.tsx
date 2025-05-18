@@ -9,10 +9,15 @@ import {
   Stack,
 } from "@mui/material";
 import { Star, StarBorder } from "@mui/icons-material";
-import type { Launch } from "../types";
+import type { Launch, Rocket } from "../types";
 import useFavorites from "../hooks/useFavorites";
 
-export const LaunchCard = ({ launch }: { launch: Launch }) => {
+type Props = {
+  launch: Launch;
+  rocket: Rocket | undefined;
+};
+
+export const LaunchCard = ({ launch, rocket }: Props) => {
   const { isFavorite, toggleFavorite } = useFavorites();
   const favorite = isFavorite(launch.id);
 
@@ -39,9 +44,7 @@ export const LaunchCard = ({ launch }: { launch: Launch }) => {
                 e.stopPropagation();
                 toggleFavorite(launch);
               }}
-              aria-label={
-                favorite ? "Quitar de favoritos" : "Añadir a favoritos"
-              }
+              aria-label={"toggle-favoriteF"}
               sx={{
                 p: 0,
                 color: favorite ? "warning.main" : "grey.400",
@@ -74,6 +77,10 @@ export const LaunchCard = ({ launch }: { launch: Launch }) => {
             hour: "2-digit",
             minute: "2-digit",
           })}
+        </Typography>
+
+        <Typography variant="subtitle2" color="grey.300" mb={1}>
+          Cohete: <strong>{rocket?.name ?? "Desconocido"}</strong>
         </Typography>
 
         <Grid

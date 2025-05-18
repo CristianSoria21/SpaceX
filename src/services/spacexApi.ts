@@ -10,3 +10,8 @@ export const fetcherLaunchpads = async (): Promise<Launchpad[]> => {
   const res = await axiosServices.get(`/launchpads`);
   return res.data;
 };
+
+export const fetcherRockets = async (): Promise<Launchpad[]> => {
+  const res = await axiosServices.get(`/rockets`);
+  return res.data;
+};

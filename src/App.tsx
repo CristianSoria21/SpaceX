@@ -8,13 +8,14 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useInView } from "react-intersection-observer";
-
 import { LaunchFilters } from "./components/LaunchFilters";
 import { LaunchCard } from "./components/LaunchCard";
 import { FavoriteLaunches } from "./components/FavoriteLaunches";
 import { LaunchpadMap } from "./components/LaunchpadMap";
 import { ITEMS_PER_BATCH } from "./constants";
-import { useGetLaunches } from "./hooks/useSWR";
+import { useGetLaunches, useGetRockets } from "./hooks/useSWR";
+import { useFilters } from "./hooks/useFilters";
+import type { Filters, Rocket } from "./types";
 
 type TabPanelProps = {
   children?: React.ReactNode;
@@ -37,12 +38,24 @@ const TabPanel = ({ children, value, index }: TabPanelProps) => {
 };
 
 const App = () => {
-  const { launches, error, isLoading } = useGetLaunches();
-
-  const [tabIndex, setTabIndex] = useState(0);
-  const [filters, setFilters] = useState({ search: "", year: "", success: "" });
-  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_BATCH);
   const { ref, inView } = useInView();
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_BATCH);
+  const [tabIndex, setTabIndex] = useState(0);
+  const [filters, setFilters] = useState<Filters>({
+    search: "",
+    year: "",
+    success: "",
+    rocket: "",
+  });
+
+  const {
+    launches,
+    error: errorLaunch,
+    isLoading: loadingLaunch,
+  } = useGetLaunches();
+  const { rockets } = useGetRockets();
+
+  const filteredLaunches = useFilters(launches ?? [], rockets, filters);
 
   const handleFilterChange = useCallback(
     (newFilters: Partial<typeof filters>) => {
@@ -51,30 +64,14 @@ const App = () => {
     []
   );
 
-  const filteredLaunches = useMemo(() => {
-    if (!launches) return [];
-    return launches.filter((launch) => {
-      const matchesSearch =
-        !filters.search ||
-        launch.name.toLowerCase().includes(filters.search.toLowerCase());
-      const matchesYear =
-        !filters.year ||
-        new Date(launch.date_utc).getFullYear().toString() === filters.year;
-      const matchesSuccess =
-        filters.success === "" ||
-        launch.success === (filters.success === "true");
-      return matchesSearch && matchesYear && matchesSuccess;
-    });
-  }, [launches, filters]);
-
   const visibleLaunches = useMemo(
     () => filteredLaunches.slice(0, visibleCount),
     [filteredLaunches, visibleCount]
   );
 
   const renderLaunches = () => {
-    if (isLoading) return <Typography>Cargando lanzamientos...</Typography>;
-    if (error) return <Typography>Error al cargar los datos.</Typography>;
+    if (loadingLaunch) return <Typography>Cargando lanzamientos...</Typography>;
+    if (errorLaunch) return <Typography>Error al cargar los datos.</Typography>;
     if (!filteredLaunches.length)
       return <Typography>No se encontraron lanzamientos.</Typography>;
 
@@ -82,7 +79,12 @@ const App = () => {
       <Grid container spacing={2}>
         {visibleLaunches.map((launch) => (
           <Grid size={{ xs: 12, sm: 6, md: 4 }} key={launch.id}>
-            <LaunchCard launch={launch} />
+            <LaunchCard
+              launch={launch}
+              rocket={rockets?.find(
+                (rocket: Rocket) => rocket.id === launch.rocket
+              )}
+            />
           </Grid>
         ))}
 
@@ -136,7 +138,10 @@ const App = () => {
 
       {tabIndex === 0 && (
         <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
-          <LaunchFilters onFilterChange={handleFilterChange} />
+          <LaunchFilters
+            onFilterChange={handleFilterChange}
+            rockets={rockets}
+          />
         </Box>
       )}
 
@@ -146,7 +151,7 @@ const App = () => {
         </TabPanel>
 
         <TabPanel value={tabIndex} index={1}>
-          <FavoriteLaunches />
+          <FavoriteLaunches rockets={rockets} />
         </TabPanel>
 
         <TabPanel value={tabIndex} index={2}>

@@ -1,8 +1,13 @@
 import { Typography, Box, Grid } from "@mui/material";
-import useFavorites from "../hooks/useFavorites"; 
-import { LaunchCard } from "./LaunchCard"; 
-import type { Launch } from "../types";
-export const FavoriteLaunches = () => {
+import useFavorites from "../hooks/useFavorites";
+import { LaunchCard } from "./LaunchCard";
+import type { Launch, Rocket } from "../types";
+
+export const FavoriteLaunches = ({
+  rockets,
+}: {
+  rockets: Rocket[] | undefined;
+}) => {
   const { favorites } = useFavorites();
 
   return (
@@ -19,7 +24,12 @@ export const FavoriteLaunches = () => {
         <Grid container spacing={2}>
           {favorites.map((launch: Launch) => (
             <Grid size={4} key={launch.id}>
-              <LaunchCard launch={launch} />
+              <LaunchCard
+                launch={launch}
+                rocket={rockets?.find(
+                  (rocket: Rocket) => rocket.id === launch.rocket
+                )}
+              />
             </Grid>
           ))}
         </Grid>

@@ -1,4 +1,8 @@
-import { fetcherLaunches, fetcherLaunchpads } from "../services/spacexApi";
+import {
+  fetcherLaunches,
+  fetcherLaunchpads,
+  fetcherRockets,
+} from "../services/spacexApi";
 import useSWR from "swr";
 
 export const useGetLaunches = () => {
@@ -25,4 +29,17 @@ export const useGetLaunchpads = () => {
   });
 
   return { launchpads, isLoading, error };
+};
+
+export const useGetRockets = () => {
+  const {
+    data: rockets,
+    isLoading,
+    error,
+  } = useSWR("rockets", fetcherRockets, {
+    revalidateOnFocus: false,
+    refreshInterval: 0,
+  });
+
+  return { rockets, isLoading, error };
 };
