@@ -9,8 +9,8 @@ import {
   Stack,
 } from "@mui/material";
 import { Star, StarBorder } from "@mui/icons-material";
-import type { Launch, Rocket } from "../types";
-import useFavorites from "../hooks/useFavorites";
+import type { Launch, Rocket } from "../../types";
+import useFavorites from "../../hooks/useFavorites";
 
 type Props = {
   launch: Launch;

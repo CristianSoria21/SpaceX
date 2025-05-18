@@ -8,14 +8,15 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useInView } from "react-intersection-observer";
-import { LaunchFilters } from "./components/LaunchFilters";
-import { LaunchCard } from "./components/LaunchCard";
-import { FavoriteLaunches } from "./components/FavoriteLaunches";
-import { LaunchpadMap } from "./components/LaunchpadMap";
+import { LaunchFilters } from "./sections/launches/LaunchFilters";
+import { LaunchCard } from "./sections/launches/LaunchCard";
+import { FavoriteLaunches } from "./sections/launches/FavoriteLaunches";
+import { LaunchpadMap } from "./sections/launchpad/LaunchpadMap";
 import { ITEMS_PER_BATCH } from "./constants";
 import { useGetLaunches, useGetRockets } from "./hooks/useSWR";
 import { useFilters } from "./hooks/useFilters";
 import type { Filters, Rocket } from "./types";
+import { ApiStatusHandler } from "./components/ApiStatusHandler";
 
 type TabPanelProps = {
   children?: React.ReactNode;
@@ -48,11 +49,7 @@ const App = () => {
     rocket: "",
   });
 
-  const {
-    launches,
-    error: errorLaunch,
-    isLoading: loadingLaunch,
-  } = useGetLaunches();
+  const { launches, error, isLoading } = useGetLaunches();
   const { rockets } = useGetRockets();
 
   const filteredLaunches = useFilters(launches ?? [], rockets, filters);
@@ -70,11 +67,6 @@ const App = () => {
   );
 
   const renderLaunches = () => {
-    if (loadingLaunch) return <Typography>Cargando lanzamientos...</Typography>;
-    if (errorLaunch) return <Typography>Error al cargar los datos.</Typography>;
-    if (!filteredLaunches.length)
-      return <Typography>No se encontraron lanzamientos.</Typography>;
-
     return (
       <Grid container spacing={2}>
         {visibleLaunches.map((launch) => (
@@ -110,55 +102,57 @@ const App = () => {
   }, [inView]);
 
   return (
-    <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          p: 2,
-          borderBottom: 1,
-          borderColor: "divider",
-        }}
-      >
-        <Typography variant="h6">SpaceX by Cristian Soria</Typography>
-
-        <Tabs
-          value={tabIndex}
-          onChange={(_, newValue) => setTabIndex(newValue)}
-          aria-label="Lanzamientos y Favoritos"
-          textColor="primary"
-          indicatorColor="primary"
+    <ApiStatusHandler isLoading={isLoading} error={error} api={"Launches"}>
+      <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            p: 2,
+            borderBottom: 1,
+            borderColor: "divider",
+          }}
         >
-          <Tab label="Lanzamientos" />
-          <Tab label="Favoritos" />
-          <Tab label="Bases de lanzamientos" />
-        </Tabs>
-      </Box>
+          <Typography variant="h6">SpaceX by Cristian Soria</Typography>
 
-      {tabIndex === 0 && (
-        <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
-          <LaunchFilters
-            onFilterChange={handleFilterChange}
-            rockets={rockets}
-          />
+          <Tabs
+            value={tabIndex}
+            onChange={(_, newValue) => setTabIndex(newValue)}
+            aria-label="Lanzamientos y Favoritos"
+            textColor="primary"
+            indicatorColor="primary"
+          >
+            <Tab label="Lanzamientos" />
+            <Tab label="Favoritos" />
+            <Tab label="Bases de lanzamientos" />
+          </Tabs>
         </Box>
-      )}
 
-      <Box sx={{ flex: 1, overflow: "hidden" }}>
-        <TabPanel value={tabIndex} index={0}>
-          {renderLaunches()}
-        </TabPanel>
+        {tabIndex === 0 && (
+          <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
+            <LaunchFilters
+              onFilterChange={handleFilterChange}
+              rockets={rockets}
+            />
+          </Box>
+        )}
 
-        <TabPanel value={tabIndex} index={1}>
-          <FavoriteLaunches rockets={rockets} />
-        </TabPanel>
+        <Box sx={{ flex: 1, overflow: "hidden" }}>
+          <TabPanel value={tabIndex} index={0}>
+            {renderLaunches()}
+          </TabPanel>
 
-        <TabPanel value={tabIndex} index={2}>
-          <LaunchpadMap />
-        </TabPanel>
+          <TabPanel value={tabIndex} index={1}>
+            <FavoriteLaunches rockets={rockets} />
+          </TabPanel>
+
+          <TabPanel value={tabIndex} index={2}>
+            <LaunchpadMap />
+          </TabPanel>
+        </Box>
       </Box>
-    </Box>
+    </ApiStatusHandler>
   );
 };
 
