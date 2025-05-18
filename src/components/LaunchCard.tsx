@@ -10,16 +10,11 @@ import {
 } from "@mui/material";
 import { Star, StarBorder } from "@mui/icons-material";
 import type { Launch } from "../types";
-import { useFavorites } from "../hooks/useFavorites";
+import { useFavorites } from "../context/FavoritesContext";
 
 export const LaunchCard = ({ launch }: { launch: Launch }) => {
-  const { isFavorite, addFavorite, removeFavorite } = useFavorites();
+  const { isFavorite, toggleFavorite } = useFavorites();
   const favorite = isFavorite(launch.id);
-
-  const toggleFavorite = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    favorite ? removeFavorite(launch.id) : addFavorite(launch);
-  };
 
   return (
     <Card
@@ -40,7 +35,10 @@ export const LaunchCard = ({ launch }: { launch: Launch }) => {
           <Stack direction={"row"} spacing={1} alignItems="center">
             <IconButton
               size="small"
-              onClick={toggleFavorite}
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleFavorite(launch);
+              }}
               aria-label={
                 favorite ? "Quitar de favoritos" : "Añadir a favoritos"
               }

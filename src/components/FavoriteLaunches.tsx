@@ -1,21 +1,24 @@
-import { Typography, Box } from "@mui/material";
-import { useFavorites } from "../hooks/useFavorites";
-import { LaunchCard } from "./LaunchCard";
-import { Grid } from "@mui/material";
+import { Typography, Box, Grid } from "@mui/material";
+import { useFavorites } from "../context/FavoritesContext"; 
+import { LaunchCard } from "./LaunchCard"; 
+import type { Launch } from "../types";
 export const FavoriteLaunches = () => {
   const { favorites } = useFavorites();
 
   return (
     <Box mt={4}>
       <Typography variant="h5" mb={2}>
-        Favoritos
+        Lanzamientos Favoritos
       </Typography>
+
       {favorites.length === 0 ? (
-        <Typography variant="body2">No hay lanzamientos favoritos.</Typography>
+        <Typography variant="body2" color="text.secondary">
+          No hay lanzamientos marcados como favoritos.
+        </Typography>
       ) : (
         <Grid container spacing={2}>
-          {favorites.map((launch) => (
-            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={launch.id}>
+          {favorites.map((launch: Launch) => (
+            <Grid size={4} key={launch.id}>
               <LaunchCard launch={launch} />
             </Grid>
           ))}

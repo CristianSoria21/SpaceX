@@ -3,18 +3,13 @@ export interface Launch {
   name: string;
   date_utc: string;
   success: boolean;
-  rocketId: string;
-  launchpadId: string;
+  rocket: string;
+  launchpad: string;
   details?: string;
   links: {
     patch: { small: string; large: string };
     webcast?: string;
   };
-}
-
-export interface Rocket {
-  id: string;
-  name: string;
 }
 
 export interface Launchpad {
