@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Star, StarBorder } from "@mui/icons-material";
 import type { Launch } from "../types";
-import { useFavorites } from "../context/FavoritesContext";
+import useFavorites from "../hooks/useFavorites";
 
 export const LaunchCard = ({ launch }: { launch: Launch }) => {
   const { isFavorite, toggleFavorite } = useFavorites();

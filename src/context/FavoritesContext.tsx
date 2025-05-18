@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  type ReactNode,
-} from "react";
+import { createContext, useEffect, useState, type ReactNode } from "react";
 import type { Launch } from "../types";
 
 const LOCAL_STORAGE_KEY = "favoriteLaunches";
@@ -15,7 +9,7 @@ type FavoritesContextType = {
   toggleFavorite: (launch: Launch) => void;
 };
 
-const FavoritesContext = createContext<FavoritesContextType | undefined>(
+export const FavoritesContext = createContext<FavoritesContextType | undefined>(
   undefined
 );
 
@@ -52,11 +46,4 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </FavoritesContext.Provider>
   );
-};
-
-export const useFavorites = () => {
-  const context = useContext(FavoritesContext);
-  if (!context)
-    throw new Error("useFavorites no se esta usando en el lugar correcto ");
-  return context;
 };
