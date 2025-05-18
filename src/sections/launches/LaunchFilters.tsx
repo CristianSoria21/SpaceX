@@ -9,16 +9,10 @@ import {
 } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import type { Rocket } from "../types";
+import type { Rocket, Filters } from "../../types";
 
 type Props = {
-  onFilterChange: (filters: {
-    year?: string;
-    success?: string;
-    rocket?: string;
-    search?: string;
-  }) => void;
-
+  onFilterChange: (filters: Filters) => void;
   rockets: Rocket[] | undefined;
 };
 
@@ -41,7 +35,7 @@ export const LaunchFilters = ({ onFilterChange, rockets }: Props) => {
 
   return (
     <Grid container alignItems="center" spacing={2}>
-      <Grid size={{ xs: 12, md: 3 }}>
+      <Grid size={{ xs: 6, md: 3 }}>
         <TextField
           size={isMobile ? "small" : "medium"}
           label="Buscar por nombre"
@@ -55,7 +49,7 @@ export const LaunchFilters = ({ onFilterChange, rockets }: Props) => {
         />
       </Grid>
 
-      <Grid size={{ xs: 12, md: 2 }}>
+      <Grid size={{ xs: 6, md: 2 }}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
             views={["year"]}
@@ -77,7 +71,7 @@ export const LaunchFilters = ({ onFilterChange, rockets }: Props) => {
         </LocalizationProvider>
       </Grid>
 
-      <Grid size={{ xs: 12, md: 2 }}>
+      <Grid size={{ xs: 6, md: 2 }}>
         <TextField
           label="Resultado"
           select
@@ -95,7 +89,7 @@ export const LaunchFilters = ({ onFilterChange, rockets }: Props) => {
         </TextField>
       </Grid>
 
-      <Grid size={{ xs: 12, md: 2 }}>
+      <Grid size={{ xs: 6, md: 2 }}>
         <TextField
           label="Cohete"
           select

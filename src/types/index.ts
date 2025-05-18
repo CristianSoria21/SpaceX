@@ -27,8 +27,8 @@ export interface Launchpad {
 }
 
 export interface Filters {
-  search: string;
-  year: string;
-  success: string;
-  rocket: string;
+  search?: string;
+  year?: string;
+  success?: string;
+  rocket?: string;
 }

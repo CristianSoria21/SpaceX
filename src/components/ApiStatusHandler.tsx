@@ -2,13 +2,13 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 import { SatelliteAlt } from "@mui/icons-material";
 import type { AxiosError } from "axios";
 
-interface ApiStatusHandlerProps {
+type Props = {
   isLoading: boolean;
   error: AxiosError;
   minHeight?: number;
   children: React.ReactNode;
   api: string;
-}
+};
 
 export const ApiStatusHandler = ({
   isLoading,
@@ -16,7 +16,7 @@ export const ApiStatusHandler = ({
   minHeight = 400,
   children,
   api,
-}: ApiStatusHandlerProps) => {
+}: Props) => {
   if (isLoading) {
     return (
       <Box

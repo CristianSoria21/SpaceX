@@ -1,12 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
-import {
-  Box,
-  Typography,
-  Tabs,
-  Tab,
-  Grid,
-  CircularProgress,
-} from "@mui/material";
+import { Box, Grid, CircularProgress } from "@mui/material";
 import { useInView } from "react-intersection-observer";
 import { LaunchFilters } from "./sections/launches/LaunchFilters";
 import { LaunchCard } from "./sections/launches/LaunchCard";
@@ -15,8 +8,8 @@ import { LaunchpadMap } from "./sections/launchpad/LaunchpadMap";
 import { ITEMS_PER_BATCH } from "./constants";
 import { useGetLaunches, useGetRockets } from "./hooks/useSWR";
 import { useFilters } from "./hooks/useFilters";
-import type { Filters, Rocket } from "./types";
 import { ApiStatusHandler } from "./components/ApiStatusHandler";
+import Header from "./components/Header";
 
 type TabPanelProps = {
   children?: React.ReactNode;
@@ -42,7 +35,7 @@ const App = () => {
   const { ref, inView } = useInView();
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_BATCH);
   const [tabIndex, setTabIndex] = useState(0);
-  const [filters, setFilters] = useState<Filters>({
+  const [filters, setFilters] = useState({
     search: "",
     year: "",
     success: "",
@@ -51,7 +44,6 @@ const App = () => {
 
   const { launches, error, isLoading } = useGetLaunches();
   const { rockets } = useGetRockets();
-
   const filteredLaunches = useFilters(launches ?? [], rockets, filters);
 
   const handleFilterChange = useCallback(
@@ -66,30 +58,25 @@ const App = () => {
     [filteredLaunches, visibleCount]
   );
 
-  const renderLaunches = () => {
-    return (
-      <Grid container spacing={2}>
-        {visibleLaunches.map((launch) => (
-          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={launch.id}>
-            <LaunchCard
-              launch={launch}
-              rocket={rockets?.find(
-                (rocket: Rocket) => rocket.id === launch.rocket
-              )}
-            />
-          </Grid>
-        ))}
-
-        {visibleLaunches.length < filteredLaunches.length && (
-          <Grid size={12} ref={ref}>
-            <Box display="flex" justifyContent="center" py={4}>
-              <CircularProgress />
-            </Box>
-          </Grid>
-        )}
-      </Grid>
-    );
-  };
+  const renderLaunches = () => (
+    <Grid container spacing={2}>
+      {visibleLaunches.map((launch) => (
+        <Grid size={{ xs: 12, sm: 6, md: 4 }} key={launch.id}>
+          <LaunchCard
+            launch={launch}
+            rocket={rockets?.find((rocket) => rocket.id === launch.rocket)}
+          />
+        </Grid>
+      ))}
+      {visibleLaunches.length < filteredLaunches.length && (
+        <Grid size={12} ref={ref}>
+          <Box display="flex" justifyContent="center" py={4}>
+            <CircularProgress />
+          </Box>
+        </Grid>
+      )}
+    </Grid>
+  );
 
   useEffect(() => {
     setVisibleCount(ITEMS_PER_BATCH);
@@ -102,32 +89,9 @@ const App = () => {
   }, [inView]);
 
   return (
-    <ApiStatusHandler isLoading={isLoading} error={error} api={"Launches"}>
+    <ApiStatusHandler isLoading={isLoading} error={error} api="Launches">
       <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            p: 2,
-            borderBottom: 1,
-            borderColor: "divider",
-          }}
-        >
-          <Typography variant="h6">SpaceX by Cristian Soria</Typography>
-
-          <Tabs
-            value={tabIndex}
-            onChange={(_, newValue) => setTabIndex(newValue)}
-            aria-label="Lanzamientos y Favoritos"
-            textColor="primary"
-            indicatorColor="primary"
-          >
-            <Tab label="Lanzamientos" />
-            <Tab label="Favoritos" />
-            <Tab label="Bases de lanzamientos" />
-          </Tabs>
-        </Box>
+        <Header setTabIndex={setTabIndex} tabIndex={tabIndex} />
 
         {tabIndex === 0 && (
           <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
