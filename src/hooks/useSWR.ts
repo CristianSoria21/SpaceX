@@ -1,3 +1,6 @@
+/**
+ * Este archivo define  hooks personalizados que utilizan SWR para obtener datos desde la API de SpaceX:
+ */
 import {
   fetcherLaunches,
   fetcherLaunchpads,
@@ -5,6 +8,10 @@ import {
 } from "../services/spacexApi";
 import useSWR from "swr";
 
+/**
+ * Hook para obtener los lanzamientos.
+ * @returns { launches, isLoading, error }
+ */
 export const useGetLaunches = () => {
   const {
     data: launches,
@@ -18,6 +25,10 @@ export const useGetLaunches = () => {
   return { launches, isLoading, error };
 };
 
+/**
+ * Hook para obtener las plataformas de lanzamiento.
+ * @returns { launchpads, isLoading, error }
+ */
 export const useGetLaunchpads = () => {
   const {
     data: launchpads,
@@ -31,6 +42,10 @@ export const useGetLaunchpads = () => {
   return { launchpads, isLoading, error };
 };
 
+/**
+ * Hook para obtener los cohetes.
+ * @returns { rockets, isLoading, error }
+ */
 export const useGetRockets = () => {
   const {
     data: rockets,

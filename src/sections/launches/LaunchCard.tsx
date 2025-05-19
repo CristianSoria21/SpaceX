@@ -1,3 +1,8 @@
+/**
+ * Componente que muestra la información detallada de un lanzamiento.
+ * @param launch - Objeto de tipo Launch con los datos del lanzamiento
+ * @param rocket - Objeto de tipo Rocket asociado al lanzamiento (opcional)
+ */
 import {
   Card,
   Grid,
@@ -44,7 +49,7 @@ export const LaunchCard = ({ launch, rocket }: Props) => {
                 e.stopPropagation();
                 toggleFavorite(launch);
               }}
-              aria-label={"toggle-favoriteF"}
+              aria-label={"toggle-favorite"}
               sx={{
                 p: 0,
                 color: favorite ? "warning.main" : "grey.400",

@@ -17,6 +17,12 @@ type TabPanelProps = {
   index: number;
 };
 
+/**
+ * Componente auxiliar para mostrar el contenido de una pestaña.
+ * @param {React.ReactNode} [props.children] - Contenido que se muestra cuando la pestaña está activa.
+ * @param {number} props.value - Índice actual de la pestaña activa.
+ * @param {number} props.index - Índice de esta pestaña.
+ */
 const TabPanel = ({ children, value, index }: TabPanelProps) => {
   if (value !== index) return null;
   return (
@@ -31,6 +37,11 @@ const TabPanel = ({ children, value, index }: TabPanelProps) => {
   );
 };
 
+/**
+ * Componente principal de la aplicación que muestra lanzamientos,
+ * pestañas para favoritos y mapa de plataformas de lanzamiento.
+ * @returns {JSX.Element} Componente de la aplicación.
+ */
 const App = () => {
   const { ref, inView } = useInView();
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_BATCH);

@@ -1,4 +1,11 @@
-// hooks/useFilters.ts
+/**
+ * Este hook filtra una lista de lanzamientos en base a los filtros aplicados (búsqueda por nombre,
+ * año, éxito del lanzamiento y tipo de cohete). Devuelve solo los resultados que cumplen con todos
+ * los criterios activos.
+ * @param launches Lista completa de lanzamientos.
+ * @param rockets Lista de cohetes disponibles (puede ser undefined si aún no se ha cargado).
+ * @param filters Objeto con los filtros seleccionados por el usuario.
+ */
 import { useMemo } from "react";
 import type { Rocket, Launch, Filters } from "../types";
 

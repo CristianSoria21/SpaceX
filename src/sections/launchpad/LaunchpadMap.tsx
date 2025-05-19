@@ -1,3 +1,5 @@
+// Muestra un mapa interactivo de Google con marcadores para las plataformas de lanzamiento favoritas del usuario.
+// Al hacer clic en un marcador, se abre una ventana con detalles de la plataforma y una lista de lanzamientos favoritos relacionados.
 import { useState, useMemo } from "react";
 import {
   GoogleMap,
@@ -19,6 +21,7 @@ import type { Launchpad, Launch } from "../../types";
 import { useGetLaunchpads } from "../../hooks/useSWR";
 import useFavorites from "../../hooks/useFavorites";
 import { ApiStatusHandler } from "../../components/ApiStatusHandler";
+import { Star } from "@mui/icons-material";
 
 const mapContainerStyle = { width: "100%", height: "100%", borderRadius: 12 };
 const defaultCenter = { lat: 20, lng: 0 };
@@ -166,9 +169,49 @@ export const LaunchpadMap = () => {
             }}
           >
             <Typography variant="subtitle1" color="text.secondary">
-              {filteredLaunchpads?.length} plataformas favoritas
+              {filteredLaunchpads?.length} lanzamientos favoritos
             </Typography>
           </Box>
+
+          {filteredLaunchpads?.length == 0 && (
+            <Box
+              sx={{
+                position: "absolute",
+                top: 70,
+                right: 16,
+                zIndex: 1,
+                bgcolor: "background.paper",
+                p: 1,
+                borderRadius: 1,
+                boxShadow: 3,
+              }}
+            >
+              <Typography variant="h6" color="text.primary" gutterBottom>
+                ¡Aún no tienes plataformas favoritas!
+              </Typography>
+              <Typography variant="body1" color="text.secondary" paragraph>
+                Para ver las plataformas en el mapa:
+              </Typography>
+              <Box component="ol" textAlign="left" sx={{ pl: 3, mb: 3 }}>
+                <Box component="li">
+                  <Typography variant="body2">
+                    Explora los <strong>lanzamientos</strong> disponibles
+                  </Typography>
+                </Box>
+                <Box component="li">
+                  <Typography variant="body2">
+                    Marca tus favoritos con el ícono{" "}
+                    <Star fontSize="small" color="warning" sx={{ mx: 0.5 }} />
+                  </Typography>
+                </Box>
+                <Box component="li">
+                  <Typography variant="body2">
+                    Las plataformas aparecerán automáticamente aquí
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          )}
         </Box>
       )}
     </ApiStatusHandler>
