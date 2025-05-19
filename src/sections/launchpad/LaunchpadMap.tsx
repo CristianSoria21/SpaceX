@@ -187,7 +187,7 @@ export const LaunchpadMap = () => {
               }}
             >
               <Typography variant="h6" color="text.primary" gutterBottom>
-                ¡Aún no tienes plataformas favoritas!
+                ¡Aún no tienes lanzamientos agregados a favoritos!
               </Typography>
               <Typography variant="body1" color="text.secondary" paragraph>
                 Para ver las plataformas en el mapa:

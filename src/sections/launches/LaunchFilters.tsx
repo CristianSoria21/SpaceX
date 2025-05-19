@@ -95,8 +95,8 @@ export const LaunchFilters = ({ onFilterChange, rockets }: Props) => {
               label="Año"
               value={year}
               onChange={handleYearChange}
-              maxDate={new Date()} 
-              minDate={new Date(1950, 0, 1)} 
+              maxDate={new Date()}
+              minDate={new Date(1950, 0, 1)}
               slotProps={{
                 textField: {
                   fullWidth: true,
@@ -148,10 +148,9 @@ export const LaunchFilters = ({ onFilterChange, rockets }: Props) => {
 
         <Grid size={{ xs: 12, md: 2 }}>
           <Button
-            sx={{ width: "100%" }}
+            sx={{ width: "100%", background: "#232362" }}
             size={isMobile ? "small" : "medium"}
-            variant="outlined"
-            color="primary"
+            variant="contained"
             onClick={handleClear}
           >
             Limpiar filtros

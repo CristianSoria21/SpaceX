@@ -19,7 +19,7 @@ const Header = ({ tabIndex, setTabIndex }: Props) => {
       }}
     >
       <Grid size={{ xs: 12, md: 4 }}>
-        <Typography variant="h6">SpaceX by Cristian Soria</Typography>
+        <Typography variant="h6" color="#232362">SpaceX by Cristian Soria</Typography>
       </Grid>
 
       <Grid size={{ xs: 12, md: "auto" }}>
