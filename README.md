@@ -49,8 +49,6 @@ Una vez iniciado el proyecto en el navegador:
 VITE_GOOGLE_MAPS_API_KEY=tu_clave_aquí
 ```
 
-> Asegúrate de **no subir** la clave a ningún repositorio público.
-
 ---
 
 ## 🛠️ Tecnologías utilizadas
@@ -75,3 +73,22 @@ npm run build     # Compila la app para producción
 npm run preview   # Previsualiza la versión de producción localmente
 npm run lint      # Ejecuta ESLint para verificar errores
 ```
+
+
+## 🐳 Docker (opcional)
+
+Este proyecto incluye un `Dockerfile` que permite contenerizar la aplicación
+
+> Requiere tener Docker instalado en el entorno donde se ejecutará.
+### 🔨 Construcción de la imagen
+
+```bash
+docker build -t spacex-dashboard .
+
+#Ejecuta el contenedor
+docker run -d -p 8080:80 spacex-dashboard
+
+```
+La aplicación estará disponible en: http://localhost:8080
+
+### Este proyecto es con finalidad de demostrar la experiencia y conocimiento del usuario :)
