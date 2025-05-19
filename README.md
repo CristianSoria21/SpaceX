@@ -1,54 +1,77 @@
-# React + TypeScript + Vite
+# 🚀 SpaceX Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación desarrollada con React, MUI, SWR, Vite y Google Maps API para explorar información sobre lanzamientos de SpaceX, con funcionalidades de filtrado, favoritos y visualización en mapa.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📦 Instalación
 
-## Expanding the ESLint configuration
+Sigue los pasos para clonar y ejecutar el proyecto localmente:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/tu-usuario/spacex-dashboard.git
+cd spacex-dashboard
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+# 2. Instalar dependencias
+npm install
+
+# 3. Ejecutar el proyecto en entorno local
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🧑‍💻 Instrucciones de uso
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+Una vez iniciado el proyecto en el navegador:
+
+1. **Listado de lanzamientos:** Verás una lista con información relevante de cada lanzamiento de SpaceX.
+2. **Filtros:** Puedes filtrar los lanzamientos por fecha, nombre o tipo de misión.
+3. **Favoritos:** Haz clic en el icono de estrella ⭐ para marcar un lanzamiento como favorito.
+4. **Mapa:** Accede al mapa para visualizar los lugares de lanzamiento y aterrizaje usando Google Maps.
+
+---
+
+## ⚠️ Consideraciones adicionales
+
+- Necesitas una clave de API de Google Maps para utilizar la vista del mapa.
+
+### ¿Cómo obtener una clave de Google Maps?
+
+1. Ve a [Google Cloud Console](https://console.cloud.google.com/).
+2. Crea un nuevo proyecto (o usa uno existente).
+3. Habilita la API de Maps JavaScript.
+4. Crea una clave de API en la sección "Credenciales".
+5. Agrega tu clave en el archivo de entorno `.env` como:
+
+```env
+VITE_GOOGLE_MAPS_API_KEY=tu_clave_aquí
+```
+
+> Asegúrate de **no subir** la clave a ningún repositorio público.
+
+---
+
+## 🛠️ Tecnologías utilizadas
+
+- **React 19** – Librería principal para construir la interfaz.
+- **Vite** – Bundler para desarrollo rápido.
+- **TypeScript** – Tipado estático.
+- **MUI** – Componentes de UI modernos.
+- **SWR** – Fetching de datos con caching y revalidación.
+- **Axios** – Cliente HTTP.
+- **Google Maps API** – Mapa interactivo con marcadores.
+- **Tailwind CSS** – Estilado rápido y responsive.
+- **Date-fns** – Utilidades para manejar fechas.
+
+---
+
+## ✅ Scripts disponibles
+
+```bash
+npm run dev       # Ejecuta la app en modo desarrollo
+npm run build     # Compila la app para producción
+npm run preview   # Previsualiza la versión de producción localmente
+npm run lint      # Ejecuta ESLint para verificar errores
 ```
